@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Vyber jmeno</title>
+    <!--  <meta charset="UTF-8"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">  
+    <style>
+      #tlacitkaContainer {
+        display: flex;
+        flex-direction: column;    /* Stack buttons vertically */
+        gap: 10px;                 /* Add space between buttons */
+        align-items: center;       /* Center buttons horizontally (optional) */
+      }
+
+      button {
+          background-color: lightgray; /* Default color */
+          color: black;
+          border: 1px solid #ccc;
+          padding: 10px 20px;
+          font-size: 16px;
+          cursor: pointer;
+          width: 100%;                  /* Set button width to 100% of the container's width */
+          max-width: 200px;             /* Optional: Set a maximum width for buttons */
+          box-sizing: border-box;       /* Make sure padding doesn't affect the width */
+      }   
+
+  </style>  
+  </head>
+  <body>
+    <h1>Vyber svoje jméno:</h1>
+    <div id="tlacitkaContainer"></div>
+    
+    <script src="prihlaseni.js" type="module" defer></script>
+  </body>
+</html>

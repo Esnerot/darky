@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dárky</title>
+    <!--  <meta charset="UTF-8"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">  
+    <style>
+        button {
+            background-color: lightgray; /* Default color */
+            color: black;
+            border: 1px solid #ccc;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }   
+
+        button.aktivni {
+            background-color: #4CAF50;  /* Green color when active */
+            color: white;
+        }
+    </style>
+  </head>
+  <body>
+    <h1 class="js-nadpis"></h1>
+
+    <p>
+      <button id="tlacitkoZpet">◄</button>
+      <button id="tlacitkoDarkyProMe">Dárky pro mě</button>
+      <button id="tlacitkoDarkyProOstatni">Dárky pro ostatní</button>
+      <script src="zapis_darku.js" type="module"></script>
+    </p>
+    
+    <input placeholder="Co si přeju" class="js-nazev">
+    <input placeholder="Popis" class="js-popis">
+    <input type="date" class="js-datum">
+    <button onclick="pridatDarek();">Přidat</button>
+
+    <div class="js-seznam-darku"></div>
+
+    <script src="zapis_darku.js" type="module" defer></script>
+  </body>
+</html>
