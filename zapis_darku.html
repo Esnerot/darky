@@ -4,21 +4,7 @@
     <title>Dárky</title>
     <!--  <meta charset="UTF-8"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1">  
-    <style>
-        button {
-            background-color: lightgray; /* Default color */
-            color: black;
-            border: 1px solid #ccc;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }   
-
-        button.aktivni {
-            background-color: #4CAF50;  /* Green color when active */
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="css_styly/styl.css">
   </head>
   <body>
     <h1 class="js-nadpis"></h1>
@@ -27,15 +13,37 @@
       <button id="tlacitkoZpet">◄</button>
       <button id="tlacitkoDarkyProMe">Dárky pro mě</button>
       <button id="tlacitkoDarkyProOstatni">Dárky pro ostatní</button>
-      <script src="zapis_darku.js" type="module"></script>
     </p>
-    
-    <input placeholder="Co si přeju" class="js-nazev">
-    <input placeholder="Popis" class="js-popis">
-    <input type="date" class="js-datum">
-    <button onclick="pridatDarek();">Přidat</button>
 
-    <div class="js-seznam-darku"></div>
+    <div id="tlacitkaOstatniUzivatele" class="proOstatni"></div>
+
+    <!-- Modal Trigger Button -->
+    <button id="openModalBtn">Nový dárek</button>
+
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span id="closeBtn" class="close">&times;</span>
+          <div class = "proMe">
+            <h2>Dárek pro mě</h2>
+            <p><input id="nazevProMe" placeholder="Co si přeju"></p>
+            <p><input id="popisProMe" placeholder="Další informace k dárku"></p>
+            <p><button id="pridatDarekProMe">Přidat dárek pro mě</button></p>
+          </div>
+        <div class = "proOstatni">
+          <h2 class="js-pro-ostatni-nadpis" >Dárek pro ostatní</h2>
+          <p><label for="zobrazitDarek"><input type="checkbox" id="zobrazitDarek">Chci, aby obdarovaný tento dárek viděl</label></p>
+          <p><input id="nazevProOstatni" placeholder="Co chci darovat"></p>
+          <p><input id="popisProOstatni" placeholder="Další informace k dárku"></p>
+          <p><label for="zamluvitDarek"><input type="checkbox" id="zamluvitDarek">Budu tento dárek dávat já?</label></p> <!-- label dělá to, že mohu kliknout i na text a políčko se zaškrtne -->
+          <p><button id="pridatDarekProOstatni">Přidat dárek pro ostatní</button></p>
+        </div>
+      </div>
+    </div>
+
+    <div id="zobrazitVytrideneDarky"></div>
 
     <script src="zapis_darku.js" type="module" defer></script>
   </body>
