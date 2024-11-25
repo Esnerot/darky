@@ -1,6 +1,6 @@
 // IMPORT MODULŮ
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, query, where } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+import { getFirestore, collection, getDocs, addDoc, deleteDoc, updateDoc, doc, query, where } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 // KONFIGURACE
 const firebaseConfig = {
@@ -91,6 +91,25 @@ export async function deleteItem(docId) {
     }
 };
 
+//ZAMLUVIT DAREK
+export async function rezervovatDarek(docId, rezervoval) {
+    try {
+        // Reference to the document to update
+        const docRef = doc(db, "darky", docId);
+        
+        // Update the .zamluvil property
+        await updateDoc(docRef, {
+            zamluvil: rezervoval
+        });
+
+        // After updating, notify the user
+        alert('Akce provedena!');
+    } catch (error) {
+        console.error("Error updating document: ", error);
+    }
+};
+
+//PŘIDAT DÁREK
 export async function pridatDarek(nazev, popis, proKoho, zapsal, zamluveno, zamluvil, chciZobrazitObdarovanemu) {
     try {
       

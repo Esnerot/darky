@@ -1,6 +1,6 @@
 import { uzivatele } from "./data/uzivatele.js";
 import { darky } from "./data/darky.js";
-import { filtrovatMojeDarky, filtrovatCiziDarky, deleteItem, pridatDarek } from "./funkcni_prvky/firestore_databaze.js";
+import { filtrovatMojeDarky, filtrovatCiziDarky, deleteItem, pridatDarek, rezervovatDarek } from "./funkcni_prvky/firestore_databaze.js";
 import { setupModal } from "./funkcni_prvky/modal.js";
 
 //LOCAL STORAGE ZÍSKÁNÍ DAT
@@ -37,7 +37,7 @@ uzivatele.forEach((uzivatel, index) => {
             vybranyObdarovany = uzivatel;
             document.querySelector('.js-pro-ostatni-nadpis').innerHTML = `Dárek pro člena: ${vybranyObdarovany.jmeno}`;
             filtrovatCiziDarky(vybranyObdarovany.jmeno).then(darkyVytridene => {
-                zobrazitCiziDarky(darkyVytridene, jmeno); 
+                zobrazitCiziDarky(darkyVytridene, jmeno, vybranyObdarovany.jmeno); 
             });
         });
   
@@ -80,7 +80,7 @@ tlackitkoProOstatni.addEventListener('click', () => {
     const proMePrvky = document.getElementsByClassName('proMe');
     
     filtrovatCiziDarky(vybranyObdarovany.jmeno).then(darkyVytridene => {
-        zobrazitCiziDarky(darkyVytridene, jmeno); 
+        zobrazitCiziDarky(darkyVytridene, jmeno, vybranyObdarovany.jmeno); 
     });
 
     for (let prvek of proMePrvky) {
@@ -120,7 +120,7 @@ document.getElementById("pridatDarekProOstatni").addEventListener("click", async
     const zamluveno = document.getElementById("zamluvitDarek").checked;
     let zamluvil = "";
     if (zamluveno) {
-        zamluvil = vybranyObdarovany.jmeno
+        zamluvil = jmeno
     };
     const chciZobrazitObdarovanemu = document.getElementById("zobrazitDarek").checked;
   
@@ -132,7 +132,7 @@ document.getElementById("pridatDarekProOstatni").addEventListener("click", async
 
     pridatDarek(nazev, popis, vybranyObdarovany.jmeno, jmeno, zamluveno, zamluvil, chciZobrazitObdarovanemu);
     filtrovatCiziDarky(vybranyObdarovany.jmeno).then(darkyVytridene => {
-        zobrazitCiziDarky(darkyVytridene, jmeno); 
+        zobrazitCiziDarky(darkyVytridene, jmeno, vybranyObdarovany.jmeno); 
     });
     document.getElementById("myModal").style.display = "none";
 });
@@ -147,7 +147,7 @@ function zobrazitMojeDarky(kolekce) {
     
     if (kolekce.length > 0) {
         dataHTML = `
-            <h3>Moje dárky:</h3>
+            <h3>Dárky pro mě:</h3>
             <table>
                 <thead>
                     <tr>
@@ -195,12 +195,12 @@ function zobrazitMojeDarky(kolekce) {
     }
 }
 
-function zobrazitCiziDarky(kolekce, jmeno) {
+function zobrazitCiziDarky(kolekce, jmeno, proKoho) {
     dataHTML = "";
 
     if (kolekce.length > 0) {
         let dataHTML = `
-            <h3>Dary pro ostatní</h3>
+            <h3>${proKoho} - seznam dárků:</h3>
             <table>
                 <thead>
                     <tr>
@@ -208,7 +208,7 @@ function zobrazitCiziDarky(kolekce, jmeno) {
                         <th scope="col">Dárek</th>
                         <th scope="col">Popis</th>
                         <th scope="col">Od koho</th>
-                        <th scope="col">Pro koho</th>
+                        <th scope="col">Zamluvil</th>
                     </tr>
                 </thead>
             <tbody>
@@ -218,6 +218,15 @@ function zobrazitCiziDarky(kolekce, jmeno) {
         kolekce.forEach(darek => {
             
             let tlacitkoSmazat = darek.zapsal === jmeno ? `<button class="js-smazatZaznam" data-id="${darek.id}">X</button>` : '';
+            let tlacitkoZamluvit;
+            if (darek.zamluvil === "") {
+                tlacitkoZamluvit = `<button class="js-zamluvitZaznam" data-id="${darek.id}">Zamluvit</button>`
+            } else if (darek.zamluvil === jmeno) {
+                tlacitkoZamluvit = `<button class="js-prenechatZaznam" data-id="${darek.id}">Přenechat</button>`
+            } else {
+                tlacitkoZamluvit = darek.zamluvil
+            }
+            
 
             dataHTML += `
                 <tr>
@@ -225,7 +234,7 @@ function zobrazitCiziDarky(kolekce, jmeno) {
                     <td>${darek.nazev}</td>
                     <td>${darek.popis}</td> 
                     <td>${darek.zapsal}</td>
-                    <td>${darek.proKoho}</td>
+                    <td>${tlacitkoZamluvit}</td>
                 </tr>
             `;
         });
@@ -237,7 +246,7 @@ function zobrazitCiziDarky(kolekce, jmeno) {
 
         document.getElementById('zobrazitVytrideneDarky').innerHTML = dataHTML;
 
-        // Attach event listeners to all delete buttons
+        // Smazat záznam
         const deleteButtons = document.querySelectorAll('.js-smazatZaznam');
         deleteButtons.forEach(button => {
             button.addEventListener('click', (event) => {
@@ -246,10 +255,39 @@ function zobrazitCiziDarky(kolekce, jmeno) {
 
                 // After deleting, re-filter and re-render the list
                 filtrovatCiziDarky(vybranyObdarovany.jmeno).then(darkyVytridene => {
-                    zobrazitCiziDarky(darkyVytridene, jmeno); 
+                    zobrazitCiziDarky(darkyVytridene, jmeno, vybranyObdarovany.jmeno); 
                 });
             });
         });
+
+        // Zarezervovat
+        const zamluvitButtons = document.querySelectorAll('.js-zamluvitZaznam');
+        zamluvitButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const itemId = event.target.getAttribute('data-id'); // Get the item ID
+                rezervovatDarek(itemId, jmeno); // Call the deleteItem function with the item ID
+
+                // After deleting, re-filter and re-render the list
+                filtrovatCiziDarky(vybranyObdarovany.jmeno).then(darkyVytridene => {
+                    zobrazitCiziDarky(darkyVytridene, jmeno, vybranyObdarovany.jmeno); 
+                });
+            });
+        })
+
+        // Odstranit rezervaci
+        const prenechatButtons = document.querySelectorAll('.js-prenechatZaznam');
+        prenechatButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const itemId = event.target.getAttribute('data-id'); // Get the item ID
+                rezervovatDarek(itemId, ''); // Call the deleteItem function with the item ID
+
+                // After deleting, re-filter and re-render the list
+                filtrovatCiziDarky(vybranyObdarovany.jmeno).then(darkyVytridene => {
+                    zobrazitCiziDarky(darkyVytridene, jmeno, vybranyObdarovany.jmeno); 
+                });
+            });
+        })
+
     } else {
         document.getElementById('zobrazitVytrideneDarky').innerHTML = "<p>Zatím žádné dárky.</p>";
     }

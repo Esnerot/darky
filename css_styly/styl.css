@@ -200,10 +200,15 @@ tr:hover {
 }
 
 table button {
-  font-size: 10px;
+  font-size: 12px;
 }
 
-/* Button Hover Effect */
-table button:hover {
+button.js-zamluvitZaznam {
+  background-color: black;
+  color: white;
+  font-size: 12px;
+}
+
+button.js-smazatZaznam:hover {
   background-color: #c0392b;    /* Darker red on hover */
 }
