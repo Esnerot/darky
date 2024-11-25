@@ -1,0 +1,190 @@
+/*OBRAZOVKA */
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   /* Center content vertically */
+    min-height: 100vh;         /* Full viewport height */
+    margin: 0;                 /* Remove default margin */
+    font-family: Arial, sans-serif; /* Use Arial font */
+    background-color: #f4f4f4;  /* Light background color */
+    color: #333;               /* Dark text color for contrast */
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 10px;         /* Space between heading and buttons */
+    text-align: center;          /* Center the heading text */
+  }
+  
+  /* DEFAULTNĚ SCHOVAT PRVKY PRO OSTATNÍ */
+  .proOstatni {
+    display: none;
+  }
+  
+  /*---TLACITKA----------------------------------------------------------*/
+  .tlacitkoZpetKontejner {
+    display: flex;
+    justify-content: center;  /* Horizontally center the back button */
+    align-items: center;      /* Vertically center the back button */
+    width: 100%;              /* Allow the container to take up full width */
+    margin-bottom: 5px;      /* Optional: Add some space below the back button */
+  }
+  #tlacitkoZpet {
+    background-color: transparent;
+    border: 1px solid #4b4a4a;
+    color: #4b4a4a;
+    font-size: 14px;
+    cursor: pointer;
+    width: auto;                  /* Set the width */
+    justify-content: center;      /* Horizontally center the content inside the button */
+    align-items: center;          /* Vertically center the content inside the button */
+    text-align: center;
+  }
+  
+  .css-proKoho {
+    padding: 10px 20px;           /* Add padding for buttons */
+    font-size: 16px;              /* Adjust button font size */
+    cursor: pointer; 
+  }
+  
+  .css-seznamLidi {
+    padding: 10px 20px;           /* Add padding for buttons */
+    font-size: 12px;              /* Adjust button font size */
+    cursor: pointer; 
+  }
+  
+  #openModalBtn {
+    background-color: lightblue;
+    color: black;
+  }
+  
+  button.css-aktivniClovek {
+    background-color: black;
+    color: white;
+  }
+  
+  #tlacitkaContainer {
+    display: flex;
+    flex-direction: column;    /* Stack buttons vertically */
+    gap: 10px;                 /* Add space between buttons */
+    align-items: center;       /* Center buttons horizontally (optional) */
+  }
+  
+  button {
+      background-color: lightgray; /* Default color */
+      color: black;
+      border: 1px solid #ccc;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;                  /* Set button width to 100% of the container's width */
+      max-width: 200px;             /* Optional: Set a maximum width for buttons */
+      box-sizing: border-box;       /* Make sure padding doesn't affect the width */
+      border-radius: 5px;          /* Optional: Slightly rounded corners */
+  }
+  
+  button:hover {
+    background-color: #acabab;   /* Change to blue on hover */
+    color: black;                /* Change text color to white */
+    transform: scale(1.05);       /* Slight zoom-in effect */
+  }
+  
+  /*AKTIVNI TLACITKO JE ZELENE */
+  button.aktivni {
+      background-color: #4CAF50;
+      color: white;
+  }
+  
+  
+  /*---MODAL------------------------------------------------------------*/
+  /* MODAL */
+  .modal {
+  display: none; /* Hidden by default */  
+  position: fixed; /* Fixed position */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scrolling if needed */
+  background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
+  }
+  
+  /* Modal content box */
+  .modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Set width to make it look nice */
+  max-width: 350px;
+  justify-content: center;     /* Horizontally center the modal */
+  align-items: center;   
+  }
+  
+  /* The close button */
+  .close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+  }
+  
+  input {
+    padding: 10px;             /* Add padding inside the input field for better spacing */
+    font-size: 16px;           /* Adjust font size */
+    border: 1px solid #ccc;    /* Light border color */
+    border-radius: 10px;       /* Rounded corners */
+    box-sizing: border-box;    /* Ensure padding and border are included in the element's total width */
+    margin-bottom: 5px;       /* Add some space below each input */
+  }
+  
+  input:focus {
+    border-color: #4CAF50;     /* Green border on focus (can be changed to any color) */
+    outline: none;             /* Remove the default outline */
+  }
+  
+  /*---TABULKA----------------------------------------------------*/
+  /*TABULKA*/
+  table {
+    width: 100%;                  /* Make the table take full width */
+    border-collapse: collapse;    /* Merge borders for a cleaner look */
+    margin: 20px 0;               /* Space around the table */
+    box-sizing: border-box;       /* Ensure padding and border are included in width/height */
+  }
+  
+  /* Table Header Styling */
+  th, td {
+    padding: 10px 15px;           /* Padding inside table cells */
+    text-align: left;             /* Align text to the left */
+    border: 1px solid #ddd;       /* Light gray border */
+  }
+  
+  /* Table Header Styling */
+  th {
+    background-color: #f4f4f4;    /* Light background color for header */
+    font-weight: bold;            /* Make headers bold */
+    color: #333;                  /* Darker text for readability */
+  }
+  
+  /* Table Row Styling 
+  tr:nth-child(even) {
+    background-color: #f9f9f9;    /* Alternate row color for better readability 
+  }*/
+  
+  /* Table Row Hover Effect */
+  tr:hover {
+    background-color: #eaeaea;    /* Highlight row on hover */
+  }
+  
+  /* Button Hover Effect */
+  table button:hover {
+    background-color: #c0392b;    /* Darker red on hover */
+  }

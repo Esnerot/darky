@@ -86,7 +86,6 @@ export async function deleteItem(docId) {
 
         // After deletion, update the UI
         alert('Document deleted!');
-        filtrovatMojeDarky();  // Re-fetch and display the updated data
     } catch (error) {
         console.error("Error deleting document: ", error);
     }

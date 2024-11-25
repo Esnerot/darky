@@ -7,21 +7,24 @@
     <link rel="stylesheet" href="css_styly/styl.css">
   </head>
   <body>
-    <h1 class="js-nadpis"></h1>
 
-    <p>
-      <button id="tlacitkoZpet">◄</button>
-      <button id="tlacitkoDarkyProMe">Dárky pro mě</button>
-      <button id="tlacitkoDarkyProOstatni">Dárky pro ostatní</button>
-    </p>
+    <div class="css-kontejner">
+      <div class="css-levyPanel">
+        <button id="tlacitkoZpet">Zpět</button>
+        <h1 class="js-nadpis"></h1>
+        <button id="tlacitkoDarkyProMe" class="css-proKoho">Dárky pro mě</button>
+        <button id="tlacitkoDarkyProOstatni" class="css-proKoho">Dárky pro ostatní</button>
+        <div id="tlacitkaOstatniUzivatele" class="proOstatni"></div>
+      </div>
 
-    <div id="tlacitkaOstatniUzivatele" class="proOstatni"></div>
+      <div class="css-hlavniCast">
+        <button id="openModalBtn">Nový dárek</button>
+        <div id="zobrazitVytrideneDarky"></div>
+      </div>
+    </div>
 
-    <!-- Modal Trigger Button -->
-    <button id="openModalBtn">Nový dárek</button>
 
-
-    <!-- The Modal -->
+    <!-- Modal -->
     <div id="myModal" class="modal">
       <!-- Modal content -->
       <div class="modal-content">
@@ -43,7 +46,7 @@
       </div>
     </div>
 
-    <div id="zobrazitVytrideneDarky"></div>
+    
 
     <script src="zapis_darku.js" type="module" defer></script>
   </body>

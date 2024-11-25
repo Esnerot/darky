@@ -25,18 +25,19 @@ uzivatele.forEach((uzivatel, index) => {
     if (uzivatel.id !== vybranyUzivatel.id) {
         const tlacitko = document.createElement('button');
         tlacitko.textContent = uzivatel.jmeno;
+        tlacitko.classList.add('css-seznamLidi');
         if (!vybranyObdarovany){
-            tlacitko.classList.add('aktivni');
+            tlacitko.classList.add('css-aktivniClovek');
             vybranyObdarovany = uzivatel
         }
         tlacitko.addEventListener('click', () => {
             const vsechnyTlacitka = tlacitkaContainer.querySelectorAll('button');
-            vsechnyTlacitka.forEach(tlac => tlac.classList.remove('aktivni'));
-            tlacitko.classList.add('aktivni');
+            vsechnyTlacitka.forEach(tlac => tlac.classList.remove('css-aktivniClovek'));
+            tlacitko.classList.add('css-aktivniClovek');
             vybranyObdarovany = uzivatel;
             document.querySelector('.js-pro-ostatni-nadpis').innerHTML = `Dárek pro člena: ${vybranyObdarovany.jmeno}`;
             filtrovatCiziDarky(vybranyObdarovany.jmeno).then(darkyVytridene => {
-                zobrazitCiziDarky(darkyVytridene); 
+                zobrazitCiziDarky(darkyVytridene, jmeno); 
             });
         });
   
@@ -79,7 +80,7 @@ tlackitkoProOstatni.addEventListener('click', () => {
     const proMePrvky = document.getElementsByClassName('proMe');
     
     filtrovatCiziDarky(vybranyObdarovany.jmeno).then(darkyVytridene => {
-        zobrazitCiziDarky(darkyVytridene); 
+        zobrazitCiziDarky(darkyVytridene, jmeno); 
     });
 
     for (let prvek of proMePrvky) {
@@ -104,7 +105,10 @@ document.getElementById("pridatDarekProMe").addEventListener("click", async () =
       return;
     }
     */
-    pridatDarek(nazev, popis, jmeno, jmeno, false, "", true)
+    pridatDarek(nazev, popis, jmeno, jmeno, false, "", true);
+    filtrovatMojeDarky(jmeno).then(darkyVytridene => {
+        zobrazitMojeDarky(darkyVytridene);
+    });
 });
 
 //PŘIDAT DÁREK PRO OSTATNÍ
@@ -125,7 +129,10 @@ document.getElementById("pridatDarekProOstatni").addEventListener("click", async
       return;
     }
     */
-    pridatDarek(nazev, popis, vybranyObdarovany.jmeno, jmeno, zamluveno, zamluvil, chciZobrazitObdarovanemu)
+    pridatDarek(nazev, popis, vybranyObdarovany.jmeno, jmeno, zamluveno, zamluvil, chciZobrazitObdarovanemu);
+    filtrovatCiziDarky(vybranyObdarovany.jmeno).then(darkyVytridene => {
+        zobrazitCiziDarky(darkyVytridene, jmeno); 
+    });
 });
 
 let darkyVytridene = await filtrovatMojeDarky(jmeno);
@@ -134,42 +141,117 @@ let darkyVytridene = await filtrovatMojeDarky(jmeno);
 let dataHTML = "";
 
 function zobrazitMojeDarky(kolekce) {
+    dataHTML = "";
+    
     if (kolekce.length > 0) {
-        dataHTML = '<h3>Moje dárky:</h3>';
+        dataHTML = `
+            <h3>Moje dárky:</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Odstranit</th>
+                        <th scope="col">Dárek</th>
+                        <th scope="col">Popis</th>                        
+                    </tr>
+                </thead>
+                <tbody>
+        `;
 
-        // Iterate through the gifts and build HTML
+        // Iterate through the gifts and build table rows
         kolekce.forEach(darek => {
             dataHTML += `
-                <p>
-                    <button onclick="deleteItem('${darek.id}')">Smazat</button>
-                    Dárek: ${darek.nazev}, od koho: ${darek.zapsal}, pro koho: ${darek.proKoho}
-                </p>`;
+                <tr>
+                    <td><button class="js-smazatZaznam" data-id="${darek.id}">X</button></td>
+                    <td>${darek.nazev}</td>
+                    <td>${darek.popis}</td>                                       
+                </tr>
+            `;
         });
 
+        dataHTML += `
+                </tbody>
+            </table>
+        `;
+
         document.getElementById('zobrazitVytrideneDarky').innerHTML = dataHTML;
+
+        // Attach event listeners to all delete buttons
+        const deleteButtons = document.querySelectorAll('.js-smazatZaznam');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const itemId = event.target.getAttribute('data-id'); // Get the item ID
+                deleteItem(itemId); // Call the deleteItem function with the item ID
+
+                // After deleting, re-filter and re-render the list
+                filtrovatMojeDarky(jmeno).then(darkyVytridene => {
+                    zobrazitMojeDarky(darkyVytridene);
+                });
+            });
+        });
     } else {
         document.getElementById('zobrazitVytrideneDarky').innerHTML = "<p>Zatím žádné dárky.</p>";
     }
 }
 
-function zobrazitCiziDarky(kolekce) {   
-    if (kolekce.length > 0) {
-        dataHTML = '<h3>Dary pro ostatní</h3>';
+function zobrazitCiziDarky(kolekce, jmeno) {
+    dataHTML = "";
 
-        // Iterate through the gifts and build HTML
+    if (kolekce.length > 0) {
+        let dataHTML = `
+            <h3>Dary pro ostatní</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Odstranit</th>
+                        <th scope="col">Dárek</th>
+                        <th scope="col">Popis</th>
+                        <th scope="col">Od koho</th>
+                        <th scope="col">Pro koho</th>
+                    </tr>
+                </thead>
+            <tbody>
+        `;
+
+        // Iterate through the gifts and build table rows
         kolekce.forEach(darek => {
+
             dataHTML += `
-                <p>
-                    <button onclick="deleteItem('${darek.id}')">Smazat</button>
-                    Dárek: ${darek.nazev}, od koho: ${darek.zapsal}, pro koho: ${darek.proKoho}
-                </p>`;
+                <tr>
+                    <td><button class="js-smazatZaznam" data-id="${darek.id}">X</button></td>
+                    <td>${darek.nazev}</td>
+                    <td>${darek.popis}</td> 
+                    <td>${darek.zapsal}</td>
+                    <td>${darek.proKoho}</td>
+                </tr>
+            `;
         });
 
+        dataHTML += `
+                </tbody>
+            </table>
+        `;
+
         document.getElementById('zobrazitVytrideneDarky').innerHTML = dataHTML;
+
+        // Attach event listeners to all delete buttons
+        const deleteButtons = document.querySelectorAll('.js-smazatZaznam');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const itemId = event.target.getAttribute('data-id'); // Get the item ID
+                deleteItem(itemId); // Call the deleteItem function with the item ID
+
+                // After deleting, re-filter and re-render the list
+                filtrovatCiziDarky(vybranyObdarovany.jmeno).then(darkyVytridene => {
+                    zobrazitCiziDarky(darkyVytridene, jmeno); 
+                });
+            });
+        });
     } else {
         document.getElementById('zobrazitVytrideneDarky').innerHTML = "<p>Zatím žádné dárky.</p>";
     }
 }
+
+
 
 // Call the display function to render the gifts
 zobrazitMojeDarky(darkyVytridene);

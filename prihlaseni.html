@@ -5,6 +5,23 @@
     <!--  <meta charset="UTF-8"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1">  
     <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;   /* Center content vertically */
+        min-height: 100vh;         /* Full viewport height */
+        margin: 0;                 /* Remove default margin */
+        font-family: Arial, sans-serif; /* Use Arial font */
+        background-color: #f4f4f4;  /* Light background color */
+        color: #333;               /* Dark text color for contrast */
+      }
+
+      h1 {
+        font-size: 24px;
+        margin-bottom: 30px;         /* Space between heading and buttons */
+        text-align: center;          /* Center the heading text */
+      }
+
       #tlacitkaContainer {
         display: flex;
         flex-direction: column;    /* Stack buttons vertically */
@@ -22,7 +39,14 @@
           width: 100%;                  /* Set button width to 100% of the container's width */
           max-width: 200px;             /* Optional: Set a maximum width for buttons */
           box-sizing: border-box;       /* Make sure padding doesn't affect the width */
-      }   
+          border-radius: 5px;          /* Optional: Slightly rounded corners */
+      }
+      
+      button:hover {
+  background-color: #acabab;   /* Change to blue on hover */
+  color: black;                /* Change text color to white */
+  transform: scale(1.05);       /* Slight zoom-in effect */
+  }
 
   </style>  
   </head>
