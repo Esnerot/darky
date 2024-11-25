@@ -99,16 +99,17 @@ document.getElementById("pridatDarekProMe").addEventListener("click", async () =
     const nazev = document.getElementById("nazevProMe").value;
     const popis = document.getElementById("popisProMe").value;
   
-    /* 
+     
     if (!nazev) {
-      alert("Please fill in both fields!");
+      alert("Prosím vyplňte název!");
       return;
     }
-    */
+    
     pridatDarek(nazev, popis, jmeno, jmeno, false, "", true);
     filtrovatMojeDarky(jmeno).then(darkyVytridene => {
         zobrazitMojeDarky(darkyVytridene);
     });
+    document.getElementById("myModal").style.display = "none";
 });
 
 //PŘIDAT DÁREK PRO OSTATNÍ
@@ -123,16 +124,17 @@ document.getElementById("pridatDarekProOstatni").addEventListener("click", async
     };
     const chciZobrazitObdarovanemu = document.getElementById("zobrazitDarek").checked;
   
-    /* 
+    
     if (!nazev) {
-      alert("Please fill in both fields!");
+      alert("Prosím vyplňte název!");
       return;
     }
-    */
+
     pridatDarek(nazev, popis, vybranyObdarovany.jmeno, jmeno, zamluveno, zamluvil, chciZobrazitObdarovanemu);
     filtrovatCiziDarky(vybranyObdarovany.jmeno).then(darkyVytridene => {
         zobrazitCiziDarky(darkyVytridene, jmeno); 
     });
+    document.getElementById("myModal").style.display = "none";
 });
 
 let darkyVytridene = await filtrovatMojeDarky(jmeno);
@@ -214,10 +216,12 @@ function zobrazitCiziDarky(kolekce, jmeno) {
 
         // Iterate through the gifts and build table rows
         kolekce.forEach(darek => {
+            
+            let tlacitkoSmazat = darek.zapsal === jmeno ? `<button class="js-smazatZaznam" data-id="${darek.id}">X</button>` : '';
 
             dataHTML += `
                 <tr>
-                    <td><button class="js-smazatZaznam" data-id="${darek.id}">X</button></td>
+                    <td>${tlacitkoSmazat}</td>
                     <td>${darek.nazev}</td>
                     <td>${darek.popis}</td> 
                     <td>${darek.zapsal}</td>
