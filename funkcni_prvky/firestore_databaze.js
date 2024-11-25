@@ -1,6 +1,6 @@
 // IMPORT MODULŮ
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getFirestore, collection, getDocs, addDoc, deleteDoc, updateDoc, doc, query, where } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+import { getFirestore, collection, getDocs, addDoc, deleteDoc, updateDoc, doc, query, where, orderBy } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 // KONFIGURACE
 const firebaseConfig = {
@@ -24,7 +24,8 @@ export async function filtrovatMojeDarky(vybranyUzivatel) {
         const q = query(
             collection(db, "darky"),
             where("proKoho", "==", vybranyUzivatel),  // Filter by vybranyUzivatel
-            where("chciZobrazitObdarovanemu", "==", true)  // Filter by chciZobrazitObdarovanemu = true
+            where("chciZobrazitObdarovanemu", "==", true),  // Filter by chciZobrazitObdarovanemu = true
+            orderBy("datumZapsani", "desc")
         );
 
         const querySnapshot = await getDocs(q);
@@ -53,6 +54,7 @@ export async function filtrovatCiziDarky(vybranyUzivatel) {
         const q = query(
             collection(db, "darky"),
             where("proKoho", "==", vybranyUzivatel),  // Filter by vybranyUzivatel
+            orderBy("datumZapsani", "desc")
         );
 
         const querySnapshot = await getDocs(q);

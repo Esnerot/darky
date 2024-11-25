@@ -1,5 +1,4 @@
 import { uzivatele } from "./data/uzivatele.js";
-import { darky } from "./data/darky.js";
 import { filtrovatMojeDarky, filtrovatCiziDarky, deleteItem, pridatDarek, rezervovatDarek } from "./funkcni_prvky/firestore_databaze.js";
 import { setupModal } from "./funkcni_prvky/modal.js";
 
@@ -163,7 +162,7 @@ function zobrazitMojeDarky(kolekce) {
         kolekce.forEach(darek => {
             dataHTML += `
                 <tr>
-                    <td><button class="js-smazatZaznam" data-id="${darek.id}">X</button></td>
+                    <td><button class="js-smazatZaznam" data-id="${darek.id}">✖</button></td>
                     <td>${darek.nazev}</td>
                     <td>${darek.popis}</td>                                       
                 </tr>
@@ -208,7 +207,7 @@ function zobrazitCiziDarky(kolekce, jmeno, proKoho) {
                         <th scope="col">Dárek</th>
                         <th scope="col">Popis</th>
                         <th scope="col">Od koho</th>
-                        <th scope="col">Zamluvil</th>
+                        <th scope="col">Zamluvit</th>
                     </tr>
                 </thead>
             <tbody>
@@ -217,7 +216,7 @@ function zobrazitCiziDarky(kolekce, jmeno, proKoho) {
         // Iterate through the gifts and build table rows
         kolekce.forEach(darek => {
             
-            let tlacitkoSmazat = darek.zapsal === jmeno ? `<button class="js-smazatZaznam" data-id="${darek.id}">X</button>` : '';
+            let tlacitkoSmazat = darek.zapsal === jmeno ? `<button class="js-smazatZaznam" data-id="${darek.id}">✖</button>` : '';
             let tlacitkoZamluvit;
             if (darek.zamluvil === "") {
                 tlacitkoZamluvit = `<button class="js-zamluvitZaznam" data-id="${darek.id}">Zamluvit</button>`
