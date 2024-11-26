@@ -1,6 +1,13 @@
 /* DEFAULTNĚ SCHOVAT PRVKY PRO OSTATNÍ */
 .proOstatni {
   display: none;
+}
+
+.proMe {
+  display: flex;
+}
+
+.css-ostatniUzivatele {
   flex-direction: column;    /* Stack buttons vertically */
   align-items: center;       /* Center buttons horizontally (optional) */
   width: 100%;
@@ -139,13 +146,16 @@ background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
 /* Modal content box */
 .modal-content {
 background-color: #fefefe;
-margin: 15% auto;
+margin: 5% auto;
 padding: 20px;
 border: 1px solid #888;
-width: 80%; /* Set width to make it look nice */
+width: 100%; /* Set width to make it look nice */
 max-width: 350px;
-justify-content: center;     /* Horizontally center the modal */
-align-items: center;   
+}
+
+.css-modalStyl {
+  flex-direction: column;
+  align-items: center;
 }
 
 /* The close button */
@@ -169,7 +179,7 @@ input {
   border: 1px solid #ccc;    /* Light border color */
   border-radius: 10px;       /* Rounded corners */
   box-sizing: border-box;    /* Ensure padding and border are included in the element's total width */
-  margin-bottom: 5px;       /* Add some space below each input */
+  margin-bottom: 1px;       /* Add some space below each input */
 }
 
 input:focus {
