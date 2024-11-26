@@ -162,7 +162,7 @@ function zobrazitMojeDarky(kolekce) {
         kolekce.forEach(darek => {
             dataHTML += `
                 <tr>
-                    <td><button class="js-smazatZaznam" data-id="${darek.id}">✖</button></td>
+                    <td class="css-sloupecOdstranit"><button class="js-smazatZaznam" data-id="${darek.id}">✖</button></td>
                     <td>${darek.nazev}</td>
                     <td>${darek.popis}</td>                                       
                 </tr>
@@ -229,7 +229,7 @@ function zobrazitCiziDarky(kolekce, jmeno, proKoho) {
 
             dataHTML += `
                 <tr>
-                    <td>${tlacitkoSmazat}</td>
+                    <td class="css-sloupecOdstranit">${tlacitkoSmazat}</td>
                     <td>${darek.nazev}</td>
                     <td>${darek.popis}</td> 
                     <td>${darek.zapsal}</td>

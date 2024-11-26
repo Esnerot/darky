@@ -209,6 +209,30 @@ button.js-zamluvitZaznam {
   font-size: 12px;
 }
 
+button.js-smazatZaznam {
+  width: 25px;
+  height: 25px;
+  border-radius: 25%;
+  display: flex;
+  align-items: center;  /* Vertically center the text */
+  justify-content: center;  /* Horizontally center the text */
+  padding: 0;  /* Remove any default padding */
+  font-size: 14px;  /* Adjust font size to fit inside the small button */
+  text-align: center;  /* Ensure the text is aligned */
+  background-color: transparent;
+}
+
 button.js-smazatZaznam:hover {
   background-color: #c0392b;    /* Darker red on hover */
+}
+
+td.css-sloupecOdstranit {
+  text-align: center; /* Center horizontally */
+  vertical-align: middle; /* Center vertically */
+  padding: 0;
+}
+
+td.css-sloupecOdstranit button {
+  display: inline-block; /* Allow button to be inline and respect center */
+  margin: 0 auto; /* Center the button in the cell */
 }
