@@ -67,6 +67,13 @@ h1 {
   cursor: pointer; 
 }
 
+#tlacitkaOstatniUzivatele {
+  display: flex;
+  flex-direction: column;    /* Stack buttons vertically */
+  gap: 3px;                 /* Add space between buttons */
+  align-items: center;       /* Center buttons horizontally (optional) */
+  width: 100%;
+}
 #openModalBtn {
   background-color: lightblue;
   color: black;
