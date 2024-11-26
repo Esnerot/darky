@@ -62,7 +62,7 @@ tlackitkoProMe.addEventListener('click', () => {
     });
 
     for (let prvek of proMePrvky) {
-        prvek.style.display = 'block'; 
+        prvek.style.display = 'flex'; 
     }
     
     const proOstatniPrvky = document.getElementsByClassName('proOstatni');
@@ -88,7 +88,7 @@ tlackitkoProOstatni.addEventListener('click', () => {
     
     const proOstatniPrvky = document.getElementsByClassName('proOstatni');
     for (let prvek of proOstatniPrvky) {
-        prvek.style.display = 'block';
+        prvek.style.display = 'flex';
     }
 });
 
@@ -163,8 +163,8 @@ function zobrazitMojeDarky(kolekce) {
             dataHTML += `
                 <tr>
                     <td class="css-sloupecOdstranit"><button class="js-smazatZaznam" data-id="${darek.id}">✖</button></td>
-                    <td>${darek.nazev}</td>
-                    <td>${darek.popis}</td>                                       
+                    <td><div class="css-dlouhyText">${darek.nazev}</div></td>
+                    <td><div class="css-dlouhyText">${darek.popis}</div></td>                                       
                 </tr>
             `;
         });
@@ -230,8 +230,8 @@ function zobrazitCiziDarky(kolekce, jmeno, proKoho) {
             dataHTML += `
                 <tr>
                     <td class="css-sloupecOdstranit">${tlacitkoSmazat}</td>
-                    <td>${darek.nazev}</td>
-                    <td>${darek.popis}</td> 
+                    <td><div class="css-dlouhyText">${darek.nazev}</div></td>
+                    <td><div class="css-dlouhyText">${darek.popis}</div></td> 
                     <td>${darek.zapsal}</td>
                     <td>${tlacitkoZamluvit}</td>
                 </tr>

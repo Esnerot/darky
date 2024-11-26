@@ -1,6 +1,9 @@
 /* DEFAULTNĚ SCHOVAT PRVKY PRO OSTATNÍ */
 .proOstatni {
   display: none;
+  flex-direction: column;    /* Stack buttons vertically */
+  align-items: center;       /* Center buttons horizontally (optional) */
+  width: 100%;
 }
 
 /*OBRAZOVKA */
@@ -74,6 +77,7 @@ h1 {
   align-items: center;       /* Center buttons horizontally (optional) */
   width: 100%;
 }
+
 #openModalBtn {
   background-color: lightblue;
   color: black;
@@ -187,6 +191,8 @@ th, td {
   padding: 10px 15px;           /* Padding inside table cells */
   text-align: left;             /* Align text to the left */
   border: 1px solid #ddd;       /* Light gray border */
+  white-space: nowrap; /* Prevent text from wrapping onto the next line */
+  text-overflow: ellipsis; /* Display ellipsis (...) for overflowed text */
 }
 
 /* Table Header Styling */
@@ -194,6 +200,20 @@ th {
   background-color: #f4f4f4;    /* Light background color for header */
   font-weight: bold;            /* Make headers bold */
   color: #333;                  /* Darker text for readability */
+}
+
+.css-dlouhyText {
+  overflow: auto;
+}
+
+th:nth-child(2), td:nth-child(2) {
+  min-width: 200px; /* Set width for the 'Popis' column */
+  max-width: 200px; /* Set width for the 'Popis' column */
+}
+
+th:nth-child(3), td:nth-child(3) {
+  min-width: 250px;
+  max-width: 250px; /* Set width for the 'Popis' column */
 }
 
 /* Table Row Styling 
