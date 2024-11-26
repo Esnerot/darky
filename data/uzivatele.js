@@ -1,18 +1,34 @@
 export const uzivatele = [
     {   id : "1",
-        jmeno: "Adam",
+        jmeno: "Táta",
         seznamDarku : []
     },
     {   id : "2",
-        jmeno: "Bety",
+        jmeno: "Máma",
         seznamDarku : []
     },
     {   id : "3",
-        jmeno: "Cecil",
+        jmeno: "Janek",
         seznamDarku : []
     },
     {   id : "4",
-        jmeno: "Dan",
+        jmeno: "Marek",
+        seznamDarku : []
+    },
+    {   id : "5",
+        jmeno: "Pavík",
+        seznamDarku : []
+    },
+    {   id : "6",
+        jmeno: "Esterka",
+        seznamDarku : []
+    },
+    {   id : "7",
+        jmeno: "Hanička",
+        seznamDarku : []
+    },
+    {   id : "8",
+        jmeno: "Filípek",
         seznamDarku : []
     }
 ]
